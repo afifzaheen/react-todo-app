@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #eef1f6;  /* Very light grey/blue background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in element's total width and height */
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.todo-container {
+  background-color: #ffffff;
+  padding: 35px 30px; /* More padding */
+  border-radius: 15px; /* More rounded corners */
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* Softer, wider shadow */
+  width: 100%;
+  max-width: 550px; /* Slightly wider */
+  text-align: center;
+}
+
+h1 {
+  color: #2c3e50; /* Darker, sophisticated blue-grey */
+  margin-bottom: 30px;
+  font-size: 2.8em; /* Slightly larger */
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  border-bottom: 2px solid #e0e6ed; /* Subtle underline */
+  padding-bottom: 15px;
+}

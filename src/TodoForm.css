@@ -1,0 +1,47 @@
+.todo-form {
+  display: flex;
+  margin-bottom: 25px; /* More space below the form */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07); /* Softer shadow for the form */
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff; /* Explicitly set background */
+}
+
+.todo-input {
+  flex-grow: 1;
+  padding: 15px 20px; /* More padding */
+  border: none;
+  font-size: 17px; /* Slightly larger font */
+  outline: none;
+  color: #333;
+  transition: box-shadow 0.3s ease;
+}
+
+.todo-input::placeholder {
+  color: #a0a0a0; /* Softer placeholder color */
+}
+
+.todo-input:focus {
+  box-shadow: inset 0 0 0 2px #5a94ff; /* Subtle blue border on focus */
+}
+
+.add-button {
+  background-color: #5a94ff; /* Sleek blue color */
+  color: white;
+  border: none;
+  padding: 15px 25px; /* More padding */
+  font-size: 17px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  font-weight: 600; /* Slightly bolder */
+  letter-spacing: 0.5px;
+}
+
+.add-button:hover {
+  background-color: #4a80e1; /* Darker blue on hover */
+  transform: translateY(-1px); /* Slight lift on hover */
+}
+
+.add-button:active {
+  transform: translateY(0); /* Press effect */
+}
