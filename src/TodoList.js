@@ -8,7 +8,9 @@ function TodoList({ todos, onDeleteTodo, onEditTodo, onToggleEditMode }) {
       {todos.length === 0 ? (
         <p className="no-todos-message">No tasks yet! Add some above.</p>
       ) : (
-        todos.map((todo) => (
+       
+      
+        todos.map((todo) => ( 
           <TodoItem
             key={todo.id} // Important for React list rendering performance
             todo={todo}
@@ -19,7 +21,8 @@ function TodoList({ todos, onDeleteTodo, onEditTodo, onToggleEditMode }) {
         ))
       )}
     </ul>
-  );
+  );//@
+  //prevent default, stop propogation, stop immediate '' , 
 }
 
 export default TodoList;

@@ -6,7 +6,7 @@ function TodoForm({ onAddTodo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent default form submission (page reload)
-    if (newTodoText.trim()) { // Ensure the input is not empty or just whitespace
+    if (!!newTodoText) { // Ensure the input is not empty or just whitespace
       onAddTodo(newTodoText); // Call the function passed from App to add the todo
       setNewTodoText(''); // Clear the input field after adding
     }

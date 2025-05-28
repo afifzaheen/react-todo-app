@@ -23,7 +23,7 @@ function App() {
   const deleteTodo = (id) => {
     setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id)); // Filter out the todo to be deleted
   };
-
+//combining
   // Function to edit a todo's text
   const editTodo = (id, newText) => {
     setTodos((prevTodos) =>
