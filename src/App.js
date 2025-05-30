@@ -1,59 +1,97 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './App.css';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
-import './App.css'; // Main application styling
 
 function App() {
-  // State to store the array of todo objects
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(() => {
+    try {
+      const savedTodos = localStorage.getItem('todos');
+      return savedTodos ? JSON.parse(savedTodos) : [];
+    } catch (error) {
+      console.error("Failed to load todos from localStorage:", error);
+      return [];
+    }
+  });
 
-  // Function to add a new todo
+  useEffect(() => {
+    try {
+      localStorage.setItem('todos', JSON.stringify(todos));
+    } catch (error) {
+      console.error("Failed to save todos to localStorage:", error);
+    }
+  }, [todos]);
+
   const addTodo = (text) => {
-     // Create a new todo object with a unique ID (using Date.now() for simplicity),
-    // the provided text, and an 'isEditing' flag set to false initially.
     const newTodo = {
-      id: Date.now(), // Generate a unique ID (simple for this app)
+      id: Date.now(),
       text: text,
-      isEditing: false, // Flag to control edit mode for this specific todo
+      isEditing: false,
+      isCompleted: false, // NEW: Default to not completed
+      isStarted: false,   // NEW: Default to not started
     };
-    setTodos((prevTodos) => [...prevTodos, newTodo]); // Add new todo to the array
+    setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
 
-  // Function to delete a todo
   const deleteTodo = (id) => {
-    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id)); // Filter out the todo to be deleted
+    setTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
   };
-//combining
-  // Function to edit a todo's text
+
   const editTodo = (id, newText) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, text: newText, isEditing: false } : todo // Update text and exit edit mode
+        todo.id === id ? { ...todo, text: newText, isEditing: false } : todo
       )
     );
   };
 
-  // Function to toggle the isEditing state for a specific todo
   const toggleEditMode = (id) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, isEditing: !todo.isEditing } : todo // Toggle isEditing
+        todo.id === id ? { ...todo, isEditing: !todo.isEditing } : todo
       )
     );
   };
 
+  // NEW FUNCTION: Toggles the completion status of a todo
+  const toggleComplete = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        // If it's the right todo, flip its isCompleted status.
+        // Also, if it's being completed, ensure it's not in edit mode.
+        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted, isEditing: false } : todo
+      )
+    );
+  };
+
+  // NEW FUNCTION: Toggles the started status of a todo
+  const toggleStart = (id) => {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        // If it's the right todo, flip its isStarted status.
+        // You might want to add logic here: e.g., if started, it cannot be completed, etc.
+        todo.id === id ? { ...todo, isStarted: !todo.isStarted } : todo
+      )
+    );
+  };
+
+
   return (
     <div className="App">
-      <div className="todo-container">
-        <h1>My To-Do List</h1>
-        <TodoForm onAddTodo={addTodo} /> {/* Pass addTodo function as prop */}
+      <header className="App-header">
+        <h1>My Sleek To-Do App</h1>
+      </header>
+      <main>
+        <TodoForm onAddTodo={addTodo} />
         <TodoList
-          todos={todos} // Pass the todos array
-          onDeleteTodo={deleteTodo} // Pass deleteTodo function
-          onEditTodo={editTodo} // Pass editTodo function
-          onToggleEditMode={toggleEditMode} // Pass toggleEditMode function
+          todos={todos}
+          onDeleteTodo={deleteTodo}
+          onEditTodo={editTodo}
+          onToggleEditMode={toggleEditMode}
+          onToggleComplete={toggleComplete} // Pass the new toggleComplete function
+          onToggleStart={toggleStart}       // Pass the new toggleStart function
         />
-      </div>
+      </main>
     </div>
   );
 }

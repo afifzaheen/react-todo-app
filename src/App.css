@@ -1,40 +1,78 @@
+/* src/App.css */
 body {
   margin: 0;
-  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #eef1f6;  /* Very light grey/blue background */
+  background-color: #f0f2f5; /* Light grey background from initial screenshot */
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box; /* Include padding in element's total width and height */
+  justify-content: center; /* Centers horizontally */
+  align-items: center;   /* Changed to center vertically */
+  min-height: 100vh;     /* Ensures it takes full viewport height */
+  /* padding-top: 50px; REMOVED/COMMENTED OUT: This would prevent perfect vertical centering */
 }
 
 .App {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  background-color: #ffffff; /* White background for the app container */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
   width: 100%;
+  max-width: 500px; /* Max width for better readability */
+  box-sizing: border-box; /* Include padding in width */
 }
 
-.todo-container {
-  background-color: #ffffff;
-  padding: 35px 30px; /* More padding */
-  border-radius: 15px; /* More rounded corners */
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* Softer, wider shadow */
-  width: 100%;
-  max-width: 550px; /* Slightly wider */
+.App-header {
   text-align: center;
+  margin-bottom: 25px;
+  color: #333; /* Dark text for header */
 }
 
-h1 {
-  color: #2c3e50; /* Darker, sophisticated blue-grey */
-  margin-bottom: 30px;
-  font-size: 2.8em; /* Slightly larger */
-  font-weight: 700;
-  letter-spacing: -0.8px;
-  border-bottom: 2px solid #e0e6ed; /* Subtle underline */
-  padding-bottom: 15px;
+.App-header h1 {
+  font-size: 2.2em;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* TodoForm styling */
+.todo-form {
+  display: flex;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08); /* Subtle shadow for input area */
+  border-radius: 5px;
+  overflow: hidden; /* Ensures shadow/border apply correctly to inner elements */
+}
+
+.todo-input {
+  flex-grow: 1;
+  padding: 12px 15px;
+  border: 1px solid #ddd; /* Light border */
+  border-right: none; /* No border between input and button */
+  border-radius: 5px 0 0 5px; /* Rounded left corners */
+  font-size: 1em;
+  color: #333;
+}
+
+.todo-input:focus {
+  outline: none;
+  border-color: #007bff; /* Blue focus border */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Focus glow */
+}
+
+.add-button {
+  background-color: #007bff; /* Blue background for Add button */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 0 5px 5px 0; /* Rounded right corners */
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.add-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
 }

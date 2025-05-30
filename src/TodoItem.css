@@ -1,111 +1,106 @@
+/* src/TodoItem.css */
+
 .todo-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  background-color: #ffffff;
-  padding: 15px 20px; /* More padding */
-  margin-bottom: 12px; /* More space between items */
-  border-radius: 10px; /* Consistent rounded corners */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06); /* Lighter, more diffused shadow */
-  transition: all 0.2s ease-in-out;
-  border-left: 5px solid #a8dadc; /* Accent color on the left */
+  justify-content: space-between;
+  padding: 10px 15px;
+  background-color: #fdfdfd; /* White background for items */
+  border: 1px solid #eee; /* Light border */
+  border-radius: 5px;
+  margin-bottom: 8px;
+  color: #333; /* Dark text */
+  font-size: 1.1em;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); /* Soft shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.todo-item:hover {
-  transform: translateY(-3px); /* More pronounced lift */
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+/* Style for started items (kept, but adapted to light theme) */
+.todo-item.started {
+  border-left: 5px solid #ffc107; /* A yellow/orange to indicate started that fits light theme */
+  background-color: #fff9e6; /* Very light yellow background */
 }
 
-.todo-text {
+.todo-item .todo-text {
   flex-grow: 1;
-  font-size: 18px;
-  color: #333;
+  margin-right: 15px;
   word-break: break-word;
-  margin-right: 20px; /* More space */
-  line-height: 1.4; /* Better readability */
 }
+
+.todo-buttons {
+  display: flex;
+  gap: 8px; /* Space between buttons */
+  flex-shrink: 0;
+}
+
+.todo-buttons button,
+.edit-mode .save-button {
+  background-color: #e0e0e0; /* Light gray background for default buttons */
+  color: #333; /* Dark text */
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px; /* Slightly less rounded corners */
+  cursor: pointer;
+  font-weight: 500; /* Medium font weight */
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  font-size: 0.9em; /* Slightly smaller font for buttons */
+}
+
+.todo-buttons button:hover,
+.edit-mode .save-button:hover {
+  background-color: #d0d0d0;
+  transform: translateY(-1px); /* Slight lift effect */
+}
+
+.edit-button {
+  /* Inherits from general button styles, but could be overridden if needed */
+  /* If you want a specific blue like the add button, you can add it here: */
+  /* background-color: #007bff; color: white; */
+}
+.edit-button:hover {
+    /* If overriding edit-button background, ensure its hover is darker */
+    /* background-color: #0056b3; */
+}
+
+
+.delete-button {
+  background-color: #dc3545; /* Red background for delete */
+  color: white; /* White text for delete */
+}
+
+.delete-button:hover {
+  background-color: #c82333; /* Darker red on hover */
+}
+
+/* Style for the Start button (designed to fit the initial light theme) */
+.start-button {
+  background-color: #007bff; /* Using the primary blue color for start */
+  color: white; /* White text for start */
+}
+
+.start-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
 
 .edit-mode {
   display: flex;
   flex-grow: 1;
+  gap: 10px;
   align-items: center;
 }
 
 .edit-input {
   flex-grow: 1;
-  padding: 10px 15px; /* More padding */
-  border: 1px solid #d0d7de; /* Softer border */
-  border-radius: 8px; /* Rounded input */
-  font-size: 16px;
-  margin-right: 15px;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  padding: 8px 12px;
+  border: 1px solid #ddd; /* Light border for edit input */
+  border-radius: 5px;
+  background-color: #fdfdfd; /* White background */
+  color: #333; /* Dark text */
+  font-size: 1em;
 }
 
 .edit-input:focus {
-  border-color: #5a94ff;
-  box-shadow: 0 0 0 3px rgba(90, 148, 255, 0.2); /* Subtle glow on focus */
-}
-
-.save-button {
-  background-color: #28a745; /* Green for Save */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-  font-size: 15px;
-  font-weight: 500;
-}
-
-.save-button:hover {
-  background-color: #218838;
-  transform: translateY(-1px);
-}
-.save-button:active {
-  transform: translateY(0);
-}
-
-
-.todo-buttons {
-  display: flex;
-  gap: 10px; /* More space between buttons */
-}
-
-.edit-button,
-.delete-button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 8px; /* Consistent rounded corners */
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 500;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-.edit-button {
-  background-color: #ffc107; /* Muted yellow/orange */
-  color: #3d3d3d; /* Darker text for contrast */
-}
-
-.edit-button:hover {
-  background-color: #e0a800;
-  transform: translateY(-1px);
-}
-.edit-button:active {
-  transform: translateY(0);
-}
-
-.delete-button {
-  background-color: #dc3545; /* Standard red */
-  color: white;
-}
-
-.delete-button:hover {
-  background-color: #c82333;
-  transform: translateY(-1px);
-}
-.delete-button:active {
-  transform: translateY(0);
+  outline: none;
+  border-color: #007bff;
 }

@@ -1,95 +1,102 @@
-// Import useState hook for managing the edited text state and local edit mode within the item.
 import React, { useState } from 'react';
-// Import the CSS for the TodoItem component.
 import './TodoItem.css';
 
-// Define the TodoItem functional component.
-// It receives the 'todo' object, and functions for delete, edit, and toggling edit mode as props.
-function TodoItem({ todo, onDeleteTodo, onEditTodo, onToggleEditMode }) {
-  // State to temporarily hold the text being edited.
-  // It's initialized with the current todo's text.
+// Updated props: Removed onToggleComplete, kept onToggleStart
+function TodoItem({
+  todo,
+  onDeleteTodo,
+  onEditTodo,
+  onToggleEditMode,
+  onToggleStart // KEPT: For the 'Start' button's actual function
+}) {
   const [editedText, setEditedText] = useState(todo.text);
 
-  // Handler for changes in the edit input field.
   const handleEditChange = (e) => {
-    setEditedText(e.target.value); // Update editedText state as user types.
+    setEditedText(e.target.value);
   };
 
-  // Handler for saving the edited text.
   const handleSaveEdit = () => {
-    // Check if the edited text is not empty or just whitespace.
     if (editedText.trim()) {
-      onEditTodo(todo.id, editedText); // Call parent's edit function with todo ID and new text.
+      onEditTodo(todo.id, editedText);
     } else {
-      // If the edited text is empty, revert to original text and exit edit mode.
       setEditedText(todo.text);
-      onToggleEditMode(todo.id); // Exit edit mode
+      onToggleEditMode(todo.id);
     }
   };
 
-  // Handler for key presses in the edit input field.
-  // Using onKeyDown for better compatibility and control over specific keys.
-  const handleKeyDown = (e) => { // Changed function name to handleKeyDown
+  const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       handleSaveEdit();
     }
   };
 
-  // This is the array of button configurations, EDIt and Delete button.
+
+  // Placeholder function for the 'Start' button
+  const handleStartButtonClick = () => {
+    console.log(`Todo "${todo.text}" (ID: ${todo.id}) is now started!`);
+    // This calls the actual onToggleStart function defined in App.js.
+    // If you just wanted a local alert and no state update, you could remove the line below:
+    onToggleStart(todo.id);
+    alert(`Starting: ${todo.text}`); // Example: show an alert
+  };
+
+
+  // This is the array of button configurations (Edit, Delete, Start).
   const handleButtons = [
     {
       Label: "Edit",
-      onClick: () => onToggleEditMode(todo.id), // Calls parent's toggle edit mode function
+      onClick: () => onToggleEditMode(todo.id),
       className: "edit-button"
     },
     {
       Label: "Delete",
-      onClick: () => onDeleteTodo(todo.id), // Calls parent's delete function
+      onClick: () => onDeleteTodo(todo.id),
       className: "delete-button"
+    },
+    {
+      Label: "Start",
+      // Using the local placeholder function for the 'Start' button's immediate action
+      // This function then calls the prop function (onToggleStart) to update App.js state.
+      onClick: handleStartButtonClick,
+      className: "start-button"
     }
   ];
 
-
-  // The component's JSX structure.
   return (
-    <li className="todo-item"> {/* List item for a single todo */}
-      {/* Conditional rendering: Show input field if in edit mode, otherwise show text and buttons. */}
+    // Removed conditional 'completed' class. Added 'started' class based on todo.isStarted.
+    <li className={`todo-item ${todo.isStarted ? 'started' : ''}`}>
       {todo.isEditing ? (
-        // Render input field when 'isEditing' is true.
         <div className="edit-mode">
           <input
             type="text"
-            value={editedText} // Bind input value to editedText state.
-            onChange={handleEditChange} // Update state on change.
-            onKeyDown={handleKeyDown} // *** Changed from onKeyPress to onKeyDown ***
-            autoFocus // Automatically focus the input when it appears.
-            className="edit-input" // CSS class for styling.
+            value={editedText}
+            onChange={handleEditChange}
+            onKeyDown={handleKeyDown}
+            onBlur={handleSaveEdit} // Auto-save when input loses focus.
+            autoFocus
+            className="edit-input"
           />
-          <button onClick={handleSaveEdit} className="save-button"> {/* Save button */}
+          <button onClick={handleSaveEdit} className="save-button">
             Save
           </button>
         </div>
       ) : (
-        // Render todo text and action buttons when not in edit mode.
-        <> {/* React Fragment to group elements without adding an extra DOM node */}
-          <span className="todo-text">{todo.text}</span> {/* Display todo text */}
-          <div className="todo-buttons"> {/* Container for action buttons */}
-            {/* Explicitly declare each button, referencing elements from the handleButtons array */}
-            {/* Button 1: Edit */}
-            <button
-              onClick={handleButtons[0].onClick}
-              className={handleButtons[0].className}
-            >
-              {handleButtons[0].Label}
-            </button>
-
-            {/* Button 2: Delete */}
-            <button
-              onClick={handleButtons[1].onClick}
-              className={handleButtons[1].className}
-            >
-              {handleButtons[1].Label}
-            </button>
+        <>
+   
+          <span className="todo-text">{todo.text}</span>
+          <div className="todo-buttons">
+            {/* Using .map() to dynamically render buttons from the handleButtons array */}
+            {handleButtons.map((eachButton, index) => {
+              return (
+                <button
+                  key={index} // Essential for lists in React.
+                  onClick={eachButton.onClick}
+                  className={eachButton.className}
+                >
+                  {eachButton.Label}
+                </button>
+              );
+            })}
           </div>
         </>
       )}
@@ -97,5 +104,4 @@ function TodoItem({ todo, onDeleteTodo, onEditTodo, onToggleEditMode }) {
   );
 }
 
-// Export the component for use in other files (e.g., TodoList.js).
 export default TodoItem;
