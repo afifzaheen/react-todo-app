@@ -4,16 +4,24 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
 function App() {
-  const [todos, setTodos] = useState(() => {
+  // 1. Initial state is now an empty array.
+  //    The loading logic is moved to useEffect.
+  const [todos, setTodos] = useState([]);
+
+  // 2. useEffect for loading todos from localStorage (runs only once on mount)
+  useEffect(() => {
     try {
       const savedTodos = localStorage.getItem('todos');
-      return savedTodos ? JSON.parse(savedTodos) : [];
+      if (savedTodos) {
+        setTodos(JSON.parse(savedTodos));
+      }
     } catch (error) {
       console.error("Failed to load todos from localStorage:", error);
-      return [];
+      // If loading fails, state remains empty, or you could set a default empty array.
     }
-  });
+  }, []); // Empty dependency array ensures this runs only once after the initial render
 
+  // 3. Existing useEffect for saving todos to localStorage (runs whenever 'todos' changes)
   useEffect(() => {
     try {
       localStorage.setItem('todos', JSON.stringify(todos));
@@ -22,13 +30,13 @@ function App() {
     }
   }, [todos]);
 
+
   const addTodo = (text) => {
     const newTodo = {
       id: Date.now(),
       text: text,
       isEditing: false,
-      isCompleted: false, // NEW: Default to not completed
-      isStarted: false,   // NEW: Default to not started
+      isStarted: false,
     };
     setTodos((prevTodos) => [...prevTodos, newTodo]);
   };
@@ -53,33 +61,18 @@ function App() {
     );
   };
 
-  // NEW FUNCTION: Toggles the completion status of a todo
-  const toggleComplete = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        // If it's the right todo, flip its isCompleted status.
-        // Also, if it's being completed, ensure it's not in edit mode.
-        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted, isEditing: false } : todo
-      )
-    );
-  };
-
-  // NEW FUNCTION: Toggles the started status of a todo
   const toggleStart = (id) => {
     setTodos((prevTodos) =>
       prevTodos.map((todo) =>
-        // If it's the right todo, flip its isStarted status.
-        // You might want to add logic here: e.g., if started, it cannot be completed, etc.
         todo.id === id ? { ...todo, isStarted: !todo.isStarted } : todo
       )
     );
   };
 
-
   return (
     <div className="App">
       <header className="App-header">
-        <h1>My Sleek To-Do App</h1>
+        <h1>My To-Do List</h1>
       </header>
       <main>
         <TodoForm onAddTodo={addTodo} />
@@ -88,8 +81,7 @@ function App() {
           onDeleteTodo={deleteTodo}
           onEditTodo={editTodo}
           onToggleEditMode={toggleEditMode}
-          onToggleComplete={toggleComplete} // Pass the new toggleComplete function
-          onToggleStart={toggleStart}       // Pass the new toggleStart function
+          onToggleStart={toggleStart}
         />
       </main>
     </div>
