@@ -2,8 +2,13 @@ import React from 'react';
 import TodoItem from './TodoItem';
 import './TodoList.css';
 
-// Updated props to include onToggleComplete and onToggleStart
-function TodoList({ todos, onDeleteTodo, onEditTodo, onToggleEditMode, onToggleComplete, onToggleStart }) {
+function TodoList({
+  todos = [], 
+  onDeleteTodo = () => {}, // params added
+  onEditTodo = () => {}, 
+  onToggleEditMode = () => {},
+  onToggleStart = () => {} 
+}) {
   return (
     <ul className="todo-list">
       {todos.length === 0 ? (
@@ -16,8 +21,9 @@ function TodoList({ todos, onDeleteTodo, onEditTodo, onToggleEditMode, onToggleC
             onDeleteTodo={onDeleteTodo}
             onEditTodo={onEditTodo}
             onToggleEditMode={onToggleEditMode}
-            onToggleComplete={onToggleComplete} // Pass onToggleComplete
-            onToggleStart={onToggleStart}       // Pass onToggleStart
+            onToggleStart={onToggleStart}
+            // Note: onToggleComplete is a prop here, but not passed to TodoItem in current structure.
+            // If you add a "Complete" button to TodoItem, you'd pass it like others.
           />
         ))
       )}

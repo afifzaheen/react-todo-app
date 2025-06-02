@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import './TodoForm.css'; // Import the CSS for this component
 
-function TodoForm({ onAddTodo }) {
+function TodoForm({
+  onAddTodo = () => {}  // param added 
+}) {
   const [newTodoText, setNewTodoText] = useState('');
 
   const handleSubmit = (e) => {
